@@ -1,0 +1,500 @@
+
+
+        body {
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+          background-color: #000000;
+        }
+
+body {
+  margin: 0;
+}
+        .header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: white;
+          padding: 10px;
+          background-color: #3A91D8;
+        }
+
+        .logo {
+          display: flex;
+          align-items: center;
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 27px;
+          font-weight: bold;
+        }
+
+        .logo img {
+          height: 40px;
+          margin-right: 10px;
+        }
+
+        .navigation {
+          display: flex;
+          align-items: center;
+        }
+
+        .navigation a {
+          color: white;
+          margin-right: 10px;
+          text-decoration: none;
+        }
+
+
+
+
+      .titles {
+        display:block;
+        align-items: center;
+        color:#2e2e28;
+        font-size: 21px;
+      }
+
+      ion-buttons {
+        color:#2e2e28;
+      }
+
+
+        @media (max-width: 767px) {
+          .header {
+            flex-direction: row;
+            align-items: center;
+            padding: 1px;
+            justify-content: space-between;
+            padding-top: 12px;
+          }
+          .toggle-btn {
+            display: block;
+            background-color: #577BDC;
+            color: white;
+            padding: 19px;
+            border: none;
+            cursor: pointer;
+          }
+          .logo {
+            margin-right: 0;
+          }
+          .navigation {
+            flex-direction: row;
+            align-items: center;
+          }
+          .navigation a {
+            margin-bottom: 5px;
+            margin-right: 10px;
+          }
+          .content {
+            flex: 1;
+            padding: 20px;
+            margin-left: 0; /* Menghapus margin left pada layar <= 767px */
+            overflow: auto;
+          }
+          .sidebar {
+              display: none; /* Menyembunyikan sidebar pada layar <= 767px */
+          }
+
+          .scrolller {
+            flex: 1;
+            padding: 20px;
+            overflow: auto;
+          }
+
+          #page-content-wrapper {
+            right: -6;
+          }
+
+        }
+
+
+/*Dark Themes*/
+      body.dark {
+          /* Dark mode variables go here */
+
+          background-color: #121212;
+        }
+      body.dark .titles {
+        color: white;
+      }
+      body.dark .toggle-btn {
+        background-color: #577BDC;
+      }
+      body.dark ion-icon {
+        color: white;
+      }
+      body.dark ion-buttons {
+        color: white;
+      }
+      body.dark ion-content{
+        --background: #121212;
+      }
+      body.dark .tooltheme{
+        --background: #3A91D8;
+      }
+      body.white .tooltheme{
+  --background: #3A91D8;
+}
+      body.dark .tooltitle {
+        color: white;
+      }
+      body.dark ion-list {
+        background-color: #121212;
+      }
+      body.dark ion-item {
+        --background: #121212;
+      }
+      body.dark .labelion {
+        color: #FFFFFF;
+      }
+      body.dark .debelion {
+        color: #dcd8d8;
+      }
+      body.dark ion-icon {
+        color: #FFFFFF;
+      }
+      ion-icon {
+        color: #FFFFFF;
+      }
+      body.dark ion-item::part(detail-icon) {
+        color: #1c7ff1;
+      }
+      body.dark .titlepopuler {
+        color: white;
+      }
+
+    body.dark .konten {
+      background-color: #00500;
+    }
+
+
+  body.dark .konten {
+    background-color: #2f2c2c;
+  }
+
+   body.dark .mr-3 {
+     color: blue;
+   }
+
+   body.dark .trendtext {
+      color: white;
+    }
+
+body.dark .filsave {
+   color: #6f5ffc;
+ }
+  
+/*end dark themes*/
+
+
+
+         .trendtext {
+           color: white;
+         }
+
+        .mengikutext {
+           color: #404040;
+         }
+
+.filsave {
+   color: #6f5ffc;
+ }
+
+      ion-menu::part(container) {
+        border-radius: 0 20px 20px 0;
+        box-shadow: 4px 0px 16px;
+      }
+
+      ion-content {
+        --background: white;
+      }
+
+      ion-list {
+        background-color: white;
+      }
+
+      ion-item {
+        background-color: white;
+      }
+
+
+
+      .tooltheme {
+        background-color: white;
+      }
+
+      .tooltitle {
+        color: white;
+      }
+
+      .titlepopuler{
+        color: white;
+      }
+
+
+      .searching {
+        width: 82%;
+
+      }
+
+
+
+
+
+
+
+
+      ion-item::part(detail-icon) {
+        color: black;
+        opacity: 1;
+        font-size: 20px;
+      }
+
+      .konten {
+        flex: 1;
+        padding: 20px;
+        overflow:auto;
+        background-color: #dfdede;
+      }
+
+
+
+
+      .column {
+        float: left;
+        width: 110px;
+        padding: 7px;
+      }
+
+      .joki-list {
+        border-radius: 18px;
+      }
+
+      .teksinfo {
+        color: white;
+        font-family: Arial, Gagalin, sans-serif;
+        font-weight: 100;
+        font-size: 1.1rem;
+      }
+
+
+/*media*/
+
+      /* Untuk tampilan landscape atau tablet dengan lebar di antara 766px dan 767px */
+      @media (min-width: 766px) and (max-width: 810px) {
+        .AllList {
+            padding-left:102px;
+          }
+         .titlepopuler{
+           font-size:2.1rem;
+         }
+         .column{
+           width:170px;
+         }
+        #page-content-wrapper {
+           right: -6px;
+        }
+      }
+
+      /* Untuk tampilan desktop dengan lebar di atau di atas 768px */
+      @media (min-width: 768px) {
+        .AllList {
+            padding-left:400px;
+          }
+         .titlepopuler{
+           font-size:2.1rem;
+         }
+         .column{
+           width:170px;
+         }
+
+        .navteng1 {
+          margin-left: 280px; /* Menetapkan margin left pada layar > 767px */
+        }
+
+        .navteng2 {
+          margin-left: 580px; /* Menetapkan margin left pada layar > 767px */
+        }
+
+        .searchbar-input-container.sc-ion-searchbar-md {
+          width: 41%;
+        }
+
+
+       
+        
+
+        
+      }
+
+
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+
+
+
+
+      /*sidebar*/
+.sidebar {
+  flex: 0 0 auto;
+  width: 250px;
+  height: 78%;
+  background-color: #3A91D8;
+  padding-top: 20px;
+  color: white;
+  position: fixed;
+  border-right: 2px solid transparent;
+
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+
+  /* Efek setengah lingkaran pada ujung kanan */
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.k0nten {
+  flex: 0 0 auto;
+  width: 239px;
+  height: 8%;
+  background-color: #3A91D8;
+  padding-top: 20px;
+  color: #f0eded;
+  position: fixed;
+  
+  border-right: 2px solid transparent;
+
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+
+  /* Efek setengah lingkaran pada ujung kanan */
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+      .sidebar {
+        border-right: 1px solid #2d2400; /* Warna border default */
+      }
+
+
+      .sidebar p {
+        text-align: left;
+        padding-left: 18px;
+        margin: 0;
+        transition: transform 0.5s;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sidebar li {
+        padding: 8px;
+        text-align: center;
+      }
+
+      .sidebar a {
+        text-decoration: none;
+        color: white;
+        display: block;
+        transition: color 0.5s;
+      }
+
+      .sidebar a:hover {
+        color: #ffcc00; /* Warna teks saat dihover */
+      }
+
+.navteng1 {
+  flex: 1;
+  padding: 20px;
+}
+
+
+/*loader*/
+
+/* PRELOADER CSS */
+.page-loader{
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  background: #272727;
+  z-index: 1000;
+  .txt{
+    color: #666;
+    text-align: center;
+    top: 40%;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+    font-weight: bold;
+    line-height: 1.5;
+  }
+}
+
+/* SPINNER ANIMATION */
+.spinner {
+  position: relative;
+  top: 35%;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  background-color: #3A91D8;
+
+  border-radius: 100%;  
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+
+
+.mr-3 {
+  color: blue;
+}
+
+.iconnavfo {
+  font-size: 25px;
+  color: #2d2929;
+}
+
+
+.username {
+  color:#65666E;
+}
+       
+.scrolller {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+
+
+
+
+.mySlides {display:none;}

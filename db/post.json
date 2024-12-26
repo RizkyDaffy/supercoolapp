@@ -1,0 +1,86 @@
+[
+  {
+    "username": "Rizky",
+    "usertag": "rizky.daffy",
+    "photo": "cdn/Rizky.jpg",
+    "id": "5788087",
+    "time": "10 May 2023",
+    "content": "Thx my friends for best 3years",
+    "image": "cdn/post/5788087.jpg",
+    "likes": 1,
+    "comments": [
+      {
+        "username": "commenter1",
+        "text": "Great post!"
+      },
+      {
+        "username": "commenter2",
+        "text": "Amazing!"
+      }
+    ]
+  },
+  {
+    "username": "Rizky",
+    "usertag": "rizky.daffy",
+    "photo": "cdn/Rizky.jpg",
+    "id": "5781567",
+    "time": "10 May 2024",
+    "content": "Puncak kita Cess",
+    "image": "cdn/post/5781567.jpg",
+    "likes": 1,
+    "comments": [
+      {
+        "username": "commenter3",
+        "text": "Love this!"
+      }
+    ]
+  },
+  {
+    "username": "dafa",
+    "usertag": "dafaFakhri",
+    "photo": "cdn/dafa.jpg",
+    "id": "5787846",
+    "time": "10 May 2021",
+    "content": "My Classmate 😍",
+    "image": "cdn/post/5787846.jpg",
+    "likes": 1,
+    "comments": [
+      {
+        "username": "commenter3",
+        "text": "Love this!"
+      }
+    ]
+  },
+  {
+    "username": "Ryzen",
+    "usertag": "RyzenX15",
+    "photo": "cdn/Ryzen.jpg",
+    "id": "5781463",
+    "time": "10 May 2024",
+    "content": "Praktek Nari The last Chapter 😭",
+    "image": "cdn/post/5781463.jpg",
+    "likes": 1,
+    "comments": [
+      {
+        "username": "commenter3",
+        "text": "Love this!"
+      }
+    ]
+  },
+  {
+    "username": "Microboy",
+    "usertag": "Microboy_id",
+    "photo": "cdn/Microboy.jpg",
+    "id": "5784896",
+    "time": "10 May 2024",
+    "content": "Ada yg tau ga bg gw bingung",
+    "image": "cdn/post/5784896.jpg",
+    "likes": 0,
+    "comments": [
+      {
+        "username": "commenter3",
+        "text": "Love this!"
+      }
+    ]
+  }
+]

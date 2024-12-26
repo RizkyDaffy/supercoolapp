@@ -1,0 +1,117 @@
+{
+  "1233": {
+    "password": "$2b$10$b9t5XYzFS7NRY2IfMjDxZunvWs21Z3NDP4Hi456LWguzB4cSvBywu",
+    "email": "google@google.con",
+    "isVerified": true,
+    "gender": "he/him",
+    "birth": "January 1, 1111",
+    "setup": true,
+    "photo": "cdn/1233.jpg",
+    "usertag": "Asep"
+  },
+  "Rizky": {
+    "password": "$2b$10$NWoqmBr2gHInF.zJwzWvUex8BI2oLmSZTBj/kURD8eO7G8x0hRdqq",
+    "email": "RyzenX15@fbi.ac",
+    "isVerified": true,
+    "gender": "he/him",
+    "birth": "January 13, 2000",
+    "setup": true,
+    "photo": "cdn/Rizky.jpg",
+    "usertag": "Rizky",
+    "userbio": "Hello, I'm Rizky, Profesional Programmer part of Google DEV"
+  },
+  "dafa": {
+    "password": "$2b$10$RHG9qO7zkTJaZqa8PDZLPOqqA4ljMtM3Kxkcr2YHBCy7cBz11i1XW",
+    "email": "daffafakhri759@gmail.com",
+    "isVerified": true,
+    "gender": "he/him",
+    "birth": "January 11, 1111",
+    "setup": true,
+    "photo": "cdn/dafa.jpg",
+    "usertag": "dafaFakhri",
+    "userbio": "tidak ada bio untuk user ini"
+  },
+  "Ryzen": {
+    "password": "$2b$10$NWoqmBr2gHInF.zJwzWvUex8BI2oLmSZTBj/kURD8eO7G8x0hRdqq",
+    "email": "ryanzx0o0@gmail.com",
+    "isVerified": true,
+    "gender": "he/him",
+    "birth": "January 11, 1111",
+    "setup": true,
+    "photo": "cdn/Ryzen.jpg",
+    "usertag": "RyzenX15",
+    "userbio": "tidak ada bio untuk user ini"
+  },
+  "Asep": {
+    "password": "$2b$10$B5LmWhn5Suqpm74fgSgnHuwMPMKeFn/wnpw4t7W2OsYr40yIPPz.W",
+    "email": "aa@asep",
+    "isVerified": true,
+    "gender": "none",
+    "birth": "none",
+    "setup": true,
+    "photo": "cdn/Asep.jpg",
+    "usertag": "Asep Ganz",
+    "userbio": "tidak ada bio untuk user ini"
+  },
+  "Microboy": {
+    "password": "$2b$10$qlQ5E8FxFgxiuYx.IB09Neqpje0J6MUTIS9pcFQl7mfQ/3fFzvFYS",
+    "email": "microboy.tiktok@gmail.com",
+    "isVerified": true,
+    "gender": "he/him",
+    "birth": "none",
+    "setup": true,
+    "photo": "cdn/Microboy.jpg",
+    "usertag": "Microboy_id",
+    "userbio": "tidak ada bio untuk user ini"
+  },
+  "kiboytak": {
+    "password": "$2b$10$b1pqRQ.3YXYAOQ6OVqrFUOzPHkyC5SMh6mM/zWFyzJM7N6zxKwQsK",
+    "email": "gwyzen5@gmail.com",
+    "isVerified": true,
+    "gender": "he/him",
+    "birth": "none",
+    "setup": true,
+    "photo": "cdn/kiboytak.jpg",
+    "usertag": "kiboy",
+    "userbio": "tidak ada bio untuk user ini"
+  },
+  "bolang": {
+    "password": "$2b$10$b1pqRQ.3YXYAOQ6OVqrFUOzPHkyC5SMh6mM/zWFyzJM7N6zxKwQsK",
+    "email": "gwyzen5@gmail.com",
+    "isVerified": true,
+    "gender": "he/him",
+    "birth": "none",
+    "setup": true,
+    "photo": "cdn/bolang.jpg",
+    "usertag": "AzmaBolang",
+    "userbio": "tidak ada bio untuk user ini"
+  },
+  "Ray": {
+    "password": "$2b$10$rS1vw.wWxEwrX6gcpPO4euUg542PnO9kLnhfVOejsFaBwa4D4cfiS",
+    "email": "rayyan.daiva47@smp.belajar.id",
+    "isVerified": true,
+    "gender": "none",
+    "birth": "none",
+    "setup": false,
+    "photo": "cdn/basic/bassicpp.jpg"
+  },
+  "Davera": {
+    "password": "$2b$10$pFld9U..F23QmrfCoRTFZ.MhQa1kvOftcHX8jMFO/vkUNuswNiKha",
+    "email": "gwryzen5@gmail.com",
+    "isVerified": false,
+    "verificationId": "372d877e-d3f9-4299-862b-026693aff99a",
+    "gender": "none",
+    "birth": "none",
+    "setup": false,
+    "photo": "cdn/basic/bassicpp.jpg"
+  },
+  "dgfgdfg": {
+    "password": "$2b$10$rJ5rDpowOngUgkJO4HKHhum7t2rldVNBLJ5UJChZiClJPkz5FbwL2",
+    "email": "amazon@gmail.com",
+    "isVerified": true,
+    "gender": "none",
+    "birth": "none",
+    "setup": false,
+    "photo": "cdn/basic/bassicpp.jpg"
+  }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>FourtyFour | Signup</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets/css/loginform.css">
+      
+    </head>
+    <body>
+      <div class="login-box">
+        <img src="assets/images/loginform/logo.png" class="logo">
+        <h2>Masuk ke FourtyFour</h2>
+
+
+         <form method="post" action="/register">
+        
+            <input type="text" name="username" id="username" placeholder="Make Your Username" style="border-radius: 21px;" required>
+        
+         <input type="email" name="email" id="email" placeholder="Your email" style="border-radius: 21px;" required>
+        
+        <input type="password" id="password" name="password" placeholder="Make Your Password" style="border-radius: 21px;" required>
+
+        
+           <center ><br><span id="error-log" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+              <% if (typeof error !== 'undefined') { %>
+                <h2 style="color: red; font-size: 15pt;"><%= error %></h2>
+              <% } %>
+            </span></center>
+       
+
+         <input type="submit" value="make an account" class="loginbtn" onclick="login()" style="color: #1e1e1e; background-color: #84d6fe;" >
+        </form>
+        <hr>
+        <span>Or</span>
+        
+
+        <button onclick="window.location='/login';" />Sudah punya akun? Masuk Sekarang</button>
+        
+<script>
+document.querySelector(".google-btn").addEventListener("click", function() {
+    console.log("google button clicked");
+    alert("Hello World!");
+});
+document.querySelector(".apple-btn").addEventListener("click", function() {
+    alert("Apple Selected");
+});
+</script>
+    </body>
+</html>

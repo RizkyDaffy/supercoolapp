@@ -1,0 +1,651 @@
+                      <!DOCTYPE html>
+                      <html lang="en">
+                        <head>
+                          <title>FourtyFour</title>
+                          <meta charset="utf-8" />
+                          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                          <link rel="shortcut icon" href="assets/favicon.svg" type="image/x-icon" />
+                          <link rel="stylesheet" type="text/css" href="assets/css/home.css" />
+                          <script src="assets/js/home.js" defer></script>
+                          <link rel="stylesheet" href="assets/css/loginform.css">
+                         
+                          
+                        </head>
+
+                        <body>
+                              <% if (setupNeeded) { %>
+                                <div id="setupModal" style="display: block; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);">
+                                  <!-- Konten Modal -->
+                                  <div class="setup-akun">
+                                    <h2 style="padding-top:20px;">Setup Akun Dulu Yuk </h2>
+
+                                    <form id="setupForm" method="POST" action="/startup/process" enctype="multipart/form-data">
+                                      <label><h3 style="color: var(--titlesetup);">Username:</h3></label>
+                                      <input type="text" name="username" id="username" placeholder="Buat Tag/@ username mu, ex: rizky" style="border-radius: 21px;" required>
+
+                                      <label><h3 style="color: var(--titlesetup);">Photo Profile:</h3></label>
+                                      <center>
+                                        <input type="file" name="profile" id="profile" style="border-radius: 21px; color: var(--titlesetup);" accept=".png, .jpg, .webp, .jpeg" required>
+                                      </center>
+
+                                      <div id="croppedImagePreview" style="display:none;">
+                                        <h3 style="color: var(--titlesetup);">Preview Photo Profile:</h3>
+                                        <img id="croppedImage" style="max-width: 100%; border-radius: 21px;">
+                                      </div>
+
+                                      <label><h3 style="color: var(--titlesetup);">Ulang Tahun:</h3></label>
+                                      <center>
+                                        <input type="date" name="birthday" id="birthday" style="border-radius: 21px; color: var(--titlesetup);" required>
+                                      </center>
+
+                                      <label for="gender"><h3 style="color: var(--titlesetup);">Kelamin:</h3></label>
+                                      <select class="gender" name="gender">
+                                        <option value="">Tolong Pilih Satu…</option>
+                                        <option value="female">Wanita (she/her)</option>
+                                        <option value="male">Pria (he/him)</option>
+                                        <option value="other">Other (Lu lgbt? 🧐📸)</option>
+                                        <option value="prefer-not-to-answer">Gw ga mw ngasih tau gender gw</option>
+                                      </select>
+
+                                      <input type="submit" value="Buat profile sekarang" class="loginbtn" style="background-color: #84d6fe; color: var(--text-dark);">
+                                    </form>
+                                  </div>
+                                </div>
+
+                                <!-- Modal for cropping -->
+                                <div id="cropModal" style="display: none; position: fixed; z-index: 2; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);">
+                                  <div class="crop-container" style="margin: 5% auto; padding: 20px; width: 80%; max-width: 500px; background: white; border-radius: 10px;">
+                                    <h3>Crop your image</h3>
+                                    <div class="img-container">
+                                      <img id="image" style="max-width: 100%;">
+                                    </div>
+                                    <center>
+                                      <button id="confirmCropButton" style="margin-top: 10px;">Confirm Crop</button>
+                                    </center>
+                                  </div>
+                                </div>
+
+                                <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+                                <style>
+                                  .img-container {
+                                    max-width: 100%;
+                                    margin: 20px auto;
+                                  }
+                                  .preview {
+                                    overflow: hidden;
+                                    width: 160px;
+                                    height: 160px;
+                                    margin: 10px;
+                                    border: 1px solid black;
+                                  }
+                                </style>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+                                <script>
+                                  var cropper;
+                                  var image = document.getElementById('image');
+                                  var input = document.getElementById('profile');
+                                  var cropModal = document.getElementById('cropModal');
+                                  var confirmCropButton = document.getElementById('confirmCropButton');
+                                  var croppedImagePreview = document.getElementById('croppedImagePreview');
+                                  var croppedImage = document.getElementById('croppedImage');
+                                  var form = document.getElementById('setupForm');
+
+                                  input.addEventListener('change', function(e) {
+                                    var files = e.target.files;
+                                    var done = function(url) {
+                                      input.value = '';
+                                      image.src = url;
+                                      cropModal.style.display = 'block';
+                                      if (cropper) {
+                                        cropper.destroy();
+                                      }
+                                      cropper = new Cropper(image, {
+                                        aspectRatio: 1,
+                                        viewMode: 1,
+                                        preview: '.preview'
+                                      });
+                                    };
+                                    var reader;
+                                    var file;
+                                    var url;
+
+                                    if (files && files.length > 0) {
+                                      file = files[0];
+
+                                      if (URL) {
+                                        done(URL.createObjectURL(file));
+                                      } else if (FileReader) {
+                                        reader = new FileReader();
+                                        reader.onload = function(e) {
+                                          done(reader.result);
+                                        };
+                                        reader.readAsDataURL(file);
+                                      }
+                                    }
+                                  });
+
+                                  confirmCropButton.addEventListener('click', function() {
+                                    var canvas;
+                                    if (cropper) {
+                                      canvas = cropper.getCroppedCanvas({
+                                        width: 160,
+                                        height: 160,
+                                      });
+
+                                      canvas.toBlob(function(blob) {
+                                        var url = URL.createObjectURL(blob);
+                                        croppedImage.src = url;
+                                        croppedImagePreview.style.display = 'block';
+
+                                        // Create a new File object
+                                        var file = new File([blob], 'profile.jpg', { type: 'image/jpeg' });
+
+                                        // Append the cropped file to the form data
+                                        var dataTransfer = new DataTransfer();
+                                        dataTransfer.items.add(file);
+                                        input.files = dataTransfer.files;
+
+                                        cropModal.style.display = 'none';
+                                      });
+                                    }
+                                  });
+
+                                  form.addEventListener('submit', function(e) {
+                                    e.preventDefault(); // Prevent default form submission
+                                    var formData = new FormData(form);
+
+                                    // Submit the form with the cropped image
+                                    fetch('/startup/process', {
+                                      method: 'POST',
+                                      body: formData,
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                      if (data.success) {
+                                        window.location.href = '/app'; // Redirect to app page
+                                      } else {
+                                        alert(data.message); // Show error message
+                                      }
+                                    })
+                                    .catch(error => {
+                                      console.error(error);
+                                      alert('An error occurred while uploading the image.');
+                                    });
+                                  });
+                                </script>
+                              <% } %>
+
+
+
+                           
+
+                            
+                          <header class="header">
+                            <nav class="header__content">
+                              <div class="header__buttons">
+
+                          <!--light/dark-->
+                                <button class="header__theme-button" title="Toggle Theme">
+                                  <svg
+                                    class="header__theme-button-moon"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    fill="var(--text-dark)"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    <path
+                                      d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"
+                                    />
+                                  </svg>
+                                  <svg
+                                    class="header__theme-button-sun"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    fill="var(--text-dark)"
+                                    viewBox="0 0 16 16"
+                                  >
+                                    <path
+                                      d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
+
+                              <div class="header__search">
+                                <input type="text" placeholder="Search" />
+                                <svg
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M21.669 21.6543C21.8625 21.4622 21.863 21.1494 21.6703 20.9566L17.3049 16.5913C18.7912 14.9327 19.7017 12.7525 19.7017 10.3508C19.7017 5.18819 15.5135 1 10.3508 1C5.18819 1 1 5.18819 1 10.3508C1 15.5135 5.18819 19.7017 10.3508 19.7017C12.7624 19.7017 14.9475 18.7813 16.606 17.2852L20.9739 21.653C21.1657 21.8449 21.4765 21.8454 21.669 21.6543ZM1.9843 10.3508C1.9843 5.7394 5.7394 1.9843 10.3508 1.9843C14.9623 1.9843 18.7174 5.7394 18.7174 10.3508C18.7174 14.9623 14.9623 18.7174 10.3508 18.7174C5.7394 18.7174 1.9843 14.9623 1.9843 10.3508Z"
+                                    fill="#A5A5A5"
+                                    stroke="#A5A5A5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                </svg>
+                              </div>
+
+                              <div class="header__buttons header__buttons--mobile">
+
+                                <a href="#">
+                                  <ion-icon  class="libraru" name="settings-outline"></ion-icon>
+                                </a>
+
+
+
+
+                              
+                              </div>
+
+                              <div class="header__buttons header__buttons--desktop">
+                                <a href="#">
+                                  <ion-icon  class="libraru" name="home"></ion-icon>
+                                </a>
+                              
+                                <a href="#">
+                                  <ion-icon class="libraru" name="create-outline"></ion-icon>
+                                </a>
+                                <a href="#">
+                                 
+                                  <ion-icon class="libraru" name="settings-outline"></ion-icon>
+                                </a>
+                                <button class="profile-button">
+                                  <div class="profile-button__border"></div>
+                                  <div class="profile-button__picture"  onclick="window.location='/profile';">
+                                    <img src="<%= pp %>" alt="User Picture" />
+                                  </div>
+                                </button>
+                              </div>
+                            </nav>
+                          </header>
+                          <main class="main-container">
+                            <section class="content-container">
+                              <div class="content">
+                               
+                                <div class="posts">
+             <% posts.forEach(post => { %>
+               <article class="post">
+                <div class="post__header">
+                <div class="post__profile">
+                <a href="/profile?u=<%= post.username %>" class="post__avatar">
+                 <img src="<%= post.photo %>" alt="User Picture" /></a>
+                 <a target="_blank" class="post__user"><%= post.username %></a>
+                                          </div>
+
+                                      <button class="post__more-options">
+                                        <svg
+                                          width="24"
+                                          height="24"
+                                          viewBox="0 0 24 24"
+                                          fill="none"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <circle
+                                            cx="6.5"
+                                            cy="11.5"
+                                            r="1.5"
+                                            fill="var(--text-dark)"
+                                          />
+                                          <circle cx="12" cy="11.5" r="1.5" fill="var(--text-dark)" />
+                                          <circle
+                                            cx="17.5"
+                                            cy="11.5"
+                                            r="1.5"
+                                            fill="var(--text-dark)"
+                                          />
+                                        </svg>
+                                      </button>
+                                    </div>
+
+         <div class="post__content">
+           <div class="post__medias">
+             <img class="post__media" src="<%= post.image %>" alt="Post Content" />
+             </div>
+         </div>
+
+                                    <div class="post__footer">
+                                      <div class="post__buttons">
+
+
+                                        
+                                        <button class="post__button post__likebtin" data-post-id="<%= post.id %>">
+                                          <ion-icon name="heart-outline" class="likebton"></ion-icon>
+                                        </button>
+
+
+
+
+                                        
+                                        <button class="post__button">
+                                          <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              fill-rule="evenodd"
+                                              clip-rule="evenodd"
+                                              d="M21.2959 20.8165L20.2351 16.8602C20.1743 16.6385 20.2047 16.3994 20.309 16.1907C21.2351 14.3342 21.5438 12.117 20.9742 9.80402C20.2003 6.67374 17.757 4.16081 14.6354 3.33042C13.7833 3.10869 12.9442 3 12.1312 3C6.29665 3 1.74035 8.47365 3.31418 14.5647C4.04458 17.3819 7.05314 20.2992 9.88344 20.9861C10.6486 21.173 11.4008 21.26 12.1312 21.26C13.7006 21.26 15.1701 20.8557 16.4614 20.1601C16.6049 20.0818 16.7657 20.0383 16.9222 20.0383C17.0005 20.0383 17.0787 20.047 17.157 20.0688L21.009 21.0991C21.0307 21.1035 21.0525 21.1078 21.0699 21.1078C21.2177 21.1078 21.3351 20.9687 21.2959 20.8165ZM19.0178 17.1863L19.6178 19.4253L17.4831 18.8558C17.3005 18.8079 17.1135 18.7819 16.9222 18.7819C16.557 18.7819 16.1875 18.8775 15.8571 19.0558C14.6963 19.6818 13.4441 19.9992 12.1312 19.9992C11.4834 19.9992 10.8269 19.9166 10.1791 19.7601C7.78354 19.1775 5.14453 16.6037 4.53586 14.2473C3.90111 11.7865 4.40109 9.26057 5.90536 7.31719C7.40964 5.3738 9.6791 4.26081 12.1312 4.26081C12.8529 4.26081 13.5876 4.35646 14.3137 4.5521C16.9961 5.26511 19.0786 7.39544 19.7525 10.1084C20.2264 12.0213 20.0308 13.9299 19.183 15.6298C18.9395 16.1168 18.8787 16.6689 19.0178 17.1863Z"
+                                              fill="var(--text-dark)"
+                                              stroke="var(--text-dark)"
+                                              stroke-width="0.7"
+                                            />
+                                          </svg>
+                                        </button>
+                                        <button class="post__button">
+                                          <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              fill-rule="evenodd"
+                                              clip-rule="evenodd"
+                                              d="M22.8555 3.44542C22.6978 3.16703 22.3962 3 22.0714 3L2.91369 3.01392C2.52859 3.01392 2.19453 3.25055 2.05997 3.60781C1.96254 3.86764 1.98574 4.14603 2.11565 4.37338C2.16669 4.45689 2.23165 4.53577 2.31052 4.60537L9.69243 10.9712L11.4927 20.5338C11.5623 20.9096 11.8499 21.188 12.2304 21.2483C12.6062 21.3086 12.9774 21.1323 13.1723 20.8029L22.8509 4.35018C23.0179 4.06715 23.0179 3.72381 22.8555 3.44542ZM4.21748 4.39194H19.8164L10.4255 9.75089L4.21748 4.39194ZM12.6248 18.9841L11.1122 10.948L20.5171 5.58436L12.6248 18.9841Z"
+                                              fill="var(--text-dark)"
+                                              stroke="var(--text-dark)"
+                                              stroke-width="0.3"
+                                            />
+                                          </svg>
+                                        </button>
+
+                                        <div class="post__indicators"></div>
+
+                                        <button class="post__button post__button--align-right">
+                                          <svg
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              d="M19.875 2H4.125C3.50625 2 3 2.44939 3 3.00481V22.4648C3 23.0202 3.36563 23.1616 3.82125 22.7728L11.5444 16.1986C11.7244 16.0471 12.0225 16.0471 12.2025 16.1936L20.1731 22.7879C20.6287 23.1666 21 23.0202 21 22.4648V3.00481C21 2.44939 20.4994 2 19.875 2ZM19.3125 20.0209L13.3444 15.0827C12.9281 14.7394 12.405 14.5677 11.8763 14.5677C11.3363 14.5677 10.8019 14.7444 10.3856 15.0979L4.6875 19.9502V3.51479H19.3125V20.0209Z"
+                                              fill="var(--text-dark)"
+                                              stroke="var(--text-dark)"
+                                              stroke-width="0.7"
+                                            />
+                                          </svg>
+                                        </button>
+                                      </div>
+
+                                      <div class="post__infos">
+                                        <div class="post__likes">
+                                          <a href="#" class="post__likes-avatar">
+                                            <img src="cdn/basic/basicpp.png" alt="User Picture" />
+                                          </a>
+
+                                             <span class="like-sementera" id="likeSementara<%= post.id %>">Liked by <%= post.likes %> Users</span>
+                                        </div>
+                                     
+                                        <div class="post__description">
+                                          <span>
+                                      <a class="post__name--underline" target="_blank" ><b><%= post.usertag %></b></a>
+                                      <%= post.content %>
+                                          </span>
+                                        </div>
+
+                                        <span class="post__date-time"><%= post.time %></span>
+                                      </div>
+                                    </div>
+                                  </article>
+              
+                                    <% }); %>
+                                </div>
+                              </div>
+
+                              <section class="side-menu">
+                                <div class="side-menu__user-profile">
+                                  <a
+
+                                    class="side-menu__user-avatar"
+                                  >
+                                    <img src="<%= pp %>" alt="User Picture" />
+                                  </a>
+                                  <div class="side-menu__user-info">
+                                    <a target="_blank"
+                                      ><%= username %></a
+                                    >
+                                    <span>@<%= tag %></span>
+                                  </div>
+                                  <button class="side-menu__user-button" onclick="window.location='/logout';">Logout</button>
+                                </div>
+
+                                <div class="side-menu__suggestions-section">
+                                  <div class="side-menu__suggestions-header">
+                                    <h2>Suggestions for You</h2>
+                                    <button>See All</button>
+                                  </div>
+                                  <!--USER SUGESTION-->
+                                  <div class="side-menu__suggestions-content">
+                                    <% suggestions.forEach(suggestion => { %>
+                                      <div class="side-menu__suggestion">
+                                        <a href="/profile?u=<%= suggestion.username %>" class="side-menu__suggestion-avatar">
+                                          <img src="<%= suggestion.photo %>"  alt="User Picture" />
+                                        </a>
+                                        <div class="side-menu__suggestion-info">
+                                          <a href="#"><%= suggestion.username %></a>
+                                          <span>@<%= suggestion.usertag %></span>
+                                        </div>
+                                        <button class="side-menu__suggestion-button">Follow</button>
+                                      </div>
+                                    <% }); %>
+
+                                  </div>
+                                </div>
+
+
+                                <div class="side-menu__footer">
+                                  <div class="side-menu__footer-links">
+                                    <ul class="side-menu__footer-list">
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">About</a>
+                                      </li>
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">Help</a>
+                                      </li>
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">Press</a>
+                                      </li>
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">API</a>
+                                      </li>
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">Jobs</a>
+                                      </li>
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">Privacy</a>
+                                      </li>
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">Terms</a>
+                                      </li>
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">Locations</a>
+                                      </li>
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">Top Accounts</a>
+                                      </li>
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">Hashtag</a>
+                                      </li>
+                                      <li class="side-menu__footer-item">
+                                        <a class="side-menu__footer-link" href="#">Language</a>
+                                      </li>
+                                    </ul>
+                                  </div>
+
+
+                                </div>
+                              </section>
+                            </section>
+                          </main>
+
+                                      <nav class="navbar">
+                                        <a href="/app" class="navbar__button">
+                                          <ion-icon class="libraru" name="home"></ion-icon>
+                                        </a>
+                                        <a href="#" class="navbar__button">
+                                          <ion-icon class="libraru" name="search-outline"></ion-icon>
+                                        </a>
+
+                                        <a href="#" class="navbar__button">
+                                          <ion-icon class="libraru" name="create-outline"></ion-icon>
+                                        </a>
+                                        <a href="#" class="navbar__button">
+                                          <ion-icon class="libraru" name="library-outline"></ion-icon>
+                                        </a>
+                                        <button class="navbar__button profile-button">
+                                          <div class="profile-button__border"></div>
+                                          <div onclick="window.location='/profile';"class="profile-button__picture">
+                                            <img src="<%= pp %>" alt="User Picture" />
+                                          </div>
+                                        </button>
+                                      </nav>
+<script>
+  // Fungsi untuk menginisialisasi tombol like setiap kali halaman dimuat
+  //sementara
+
+  
+  function initializeLikeButtons() {
+    var likeButtons = document.querySelectorAll('.post__button.post__likebtin');
+
+    likeButtons.forEach(function(button) {
+      var postId = button.getAttribute('data-post-id');
+
+      // Membaca nilai sementara
+      var likeSementara = document.getElementById('likeSementara' + postId);
+      if (!likeSementara) {
+        console.error("Element with id 'likeSementara" + postId + "' not found.");
+        return; // Keluar dari iterasi jika elemen tidak ditemukan
+      }
+      var likescurrents = parseInt(likeSementara.innerText.match(/\d+/)[0]);
+
+      var isLiked = localStorage.getItem('liked_' + postId);
+
+      if (isLiked === 'true') {
+        button.classList.add('is-active');
+        var heartIcon = button.querySelector('ion-icon');
+        heartIcon.name = 'heart-sharp';
+      }
+
+      button.addEventListener('click', function() {
+        var heartIcon = this.querySelector('ion-icon');
+        heartIcon.style.animation = 'none';
+
+        setTimeout(function() {
+          heartIcon.style.animation = '';
+          this.classList.toggle('is-active');
+
+          if (this.classList.contains('is-active')) {
+            heartIcon.name = 'heart-sharp';
+            heartIcon.style.animation = 'pop 0.4s';
+
+            var postId = this.getAttribute('data-post-id');
+            localStorage.setItem('liked_' + postId, 'true');
+
+            // Memperbarui nilai sementara saat tombol di-like
+            likescurrents++;
+            likeSementara.innerText = 'Liked by ' + likescurrents + ' Users';
+            console.log("Likes increased to:", likescurrents); // Debugging
+
+            toggleLike(this, postId, true);
+          } else {
+            heartIcon.name = 'heart-outline';
+            heartIcon.style.animation = 'push 0.4s';
+
+            var postId = this.getAttribute('data-post-id');
+            localStorage.removeItem('liked_' + postId);
+
+            // Memperbarui nilai sementara saat tombol di-unlike
+            likescurrents--;
+            if (likescurrents < 0) {
+              likescurrents = 0; // Pastikan nilai tidak kurang dari 0
+            }
+            likeSementara.innerText = 'Liked by ' + likescurrents + ' Users';
+            console.log("Likes decreased to:", likescurrents); // Debugging
+
+            toggleLike(this, postId, false);
+          }
+        }.bind(this), 10);
+      });
+    });
+  }
+
+
+  
+  function toggleLike(button, postId, isLiked) {
+    if (isLiked) {
+      // Panggil fungsi handleLike dari server menggunakan AJAX
+      fetch('/like/' + postId)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Failed to like post.');
+          }
+        })
+        .then(data => {
+          // Update jumlah like di tampilan
+          const likesCountElement = document.getElementById('likes-count-' + postId);
+          likesCountElement.textContent = data.likes;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    } else {
+      // Panggil fungsi handleUnlike dari server menggunakan AJAX
+      fetch('/unlike/' + postId)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Failed to unlike post.');
+          }
+        })
+        .then(data => {
+          // Update jumlah like di tampilan
+          const likesCountElement = document.getElementById('likes-count-' + postId);
+          likesCountElement.textContent = data.likes;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  }
+
+  
+
+  
+  initializeLikeButtons();
+
+
+  document.getElementById("messageBtnId").addEventListener("click", function() {
+      alert("Developer nya belum buat sistem nya (maklum belum di bayar), mungkin next update bakal di buat");
+  });
+
+
+</script>
+           
+                          <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+                          <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+                                      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+                                      <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+
+
+                           
+                                      
+                        </body>
+                      </html>
